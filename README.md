@@ -209,7 +209,7 @@ php -i
 
 <http://localhost:8000>
 
-You see the default Rocky Linux "Testing 123.." page.
+You see the default Rocky Linux "HTTP Server Test Page".
 
 #### Check Adminer
 
