@@ -3,7 +3,7 @@
 Make a Vagrant box with Rocky Linux 8 LAMP stack, plus configure it for development.
 
 - Host: Linux or Mac.
-- Guest: Rocky Linux 8, Apache 2.4, MariaDB 10.6, PHP 8.1, Python 2 & 3, Git 2+.
+- Guest: Rocky Linux 8, Apache 2.4, MariaDB 10.6, PHP 8.1, Python 2 & 3, Ruby 3, Git 2.
 
 - Leave code and version control files physically outside the VM while virtually accessing them inside the VM.
 - Use any GUI tool (IDEs, browsers, database administration applications, Git clients) outside the VM to access code and data inside the VM.
@@ -44,7 +44,7 @@ vagrant ssh
     - Multiple Vagrant boxes can be run concurrently from separate terminal tabs.
     - Avoid port collision by editing `:forwarded_ports` values in `settings.yaml`.
 - Copied SSH keys to use the same in and out of VM.
-- Copied Git and Subversion configurations to use the same in and out of VM.
+- Copied Git configuration to use the same in and out of VM.
 - Synchronized projects/code directories.
 - Apache serves any local website at `http://domain.com.localhost:8000` with [VirtualDocumentRoot](https://httpd.apache.org/docs/2.4/mod/mod_vhost_alias.html).
 - Add more VirtualHost blocks from the host machine and re-provision the Vagrant box.
@@ -52,6 +52,9 @@ vagrant ssh
     - Avoid writing a password a zillion times through development.
 - Adminer served at `http://localhost:8000/adminer.php`.
 - Development-specific `php.ini` settings from `.htaccess` for all local websites.
+- Python 2 & 3 installed.
+- Ruby's latest version installed with [rbenv](https://github.com/rbenv/rbenv).
+- [Bundler](https://bundler.io) installed.
 
 ---
 
@@ -61,13 +64,12 @@ vagrant ssh
 - [VirtualBox 6+ Extension Pack](https://www.virtualbox.org/wiki/Downloads)
 - [Vagrant 2+](https://www.vagrantup.com/downloads.html)
 
-SSH keys, Git config and Subversion config settings from host machine are copied in virtual machine.
+SSH keys and Git config settings from host machine are copied in virtual machine.
 
 Check if you have them on your host machine:
 
 ```bash
 ll ~/.ssh
-ll ~/.subversion
 cat ~/.gitconfig
 ```
 
@@ -82,7 +84,6 @@ Edit values in `settings.yaml`.
     - Ex.: Change the forwarded ports of this virtual machine to avoid port collision if you have multiple virtual machines running at the same time.
 - Change `:synced_folder` values to match your host machine pathname.
 - Edit the `:copy_files` values:
-    - Ex.: Remove the Subversion array if you don't have it on your host machine.
 - Edit the `:php_error_reporting` value if necessary.
 
 Edit `config` files if needed.
@@ -96,6 +97,7 @@ Edit `provision.sh` if needed.
 
 - Add/edit Linux tools.
 - Add/edit PHP libraries.
+- Add Ruby gems.
 - Add anything you need.
 
 ---
@@ -167,7 +169,7 @@ cat /etc/redhat-release
 httpd -V
 mysql -V
 php -v
-svn --version
+ruby -v
 git --version
 openssl version
 curl --version

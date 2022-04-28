@@ -35,7 +35,6 @@ Vagrant.configure("2") do |config|
     "FORWARDED_PORT_80"   => settings[:forwarded_ports].find{|port| port[:guest] == 80}[:host],
     "GUEST_SYNCED_FOLDER" => settings[:synced_folder][:guest],
     "PHP_ERROR_REPORTING" => settings[:php_error_reporting],
-    "TIMEZONE"            => settings[:machine][:timezone],
-    "VM_CONFIG_PATH"      => "/vagrant/config"
+    "TIMEZONE"            => settings[:machine][:timezone]
   }
 end
