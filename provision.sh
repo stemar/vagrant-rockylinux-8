@@ -142,6 +142,6 @@ git --version
 httpd -V | head -n1 | cut -d ' ' -f 3-
 mysql -V
 php -v | head -n1
-python2 --version &>/dev/stdout
+python2 --version 2>/dev/stdout
 python3 --version
 ruby -v
