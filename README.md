@@ -91,7 +91,7 @@ Edit `config` files if needed.
 - Edit the `VirtualDocumentRoot` public directory value in `virtualhost.conf`.
 - Add `VirtualHost`s in `virtualhost.conf`.
 - Edit `php.ini.htaccess` values.
-- Add/edit lines to `bash_aliases`.
+- Add/edit lines to `bashrc`.
 
 Edit `provision.sh` if needed.
 
