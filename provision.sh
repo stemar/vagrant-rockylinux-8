@@ -1,6 +1,6 @@
-echo '==> Setting time zone to '$TIMEZONE
-
 timedatectl set-timezone $TIMEZONE
+
+echo '==> Setting '$(timedatectl | grep 'Time zone:' | xargs)
 
 echo '==> Resetting dnf cache'
 
@@ -113,7 +113,7 @@ chown -R vagrant:vagrant /home/vagrant/.rbenv
 echo '==> Installing Bundler'
 
 cp /vagrant/config/gemrc /home/vagrant/.gemrc
-chown -R vagrant:vagrant /home/vagrant/.gemrc
+chown vagrant:vagrant /home/vagrant/.gemrc
 gem install -q --silent bundler
 
 echo '==> Testing Apache configuration'
