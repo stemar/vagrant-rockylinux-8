@@ -121,7 +121,7 @@ apachectl configtest
 
 echo '==> Starting Apache'
 
-systemctl start httpd
+systemctl restart httpd
 systemctl enable httpd
 
 echo '==> Starting MariaDB'
@@ -129,7 +129,7 @@ echo '==> Starting MariaDB'
 if [ ! -L /etc/systemd/system/multi-user.target.wants/mariadb.service ] ; then
     ln -s /usr/lib/systemd/system/mariadb.service /etc/systemd/system/multi-user.target.wants/mariadb.service
 fi
-systemctl start mariadb
+systemctl restart mariadb
 systemctl enable mariadb
 mysqladmin -u root password ""
 
