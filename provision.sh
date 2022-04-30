@@ -80,10 +80,6 @@ fi
 cp /vagrant/config/adminer.conf /etc/httpd/conf.d/adminer.conf
 sed -i 's|FORWARDED_PORT_80|'$FORWARDED_PORT_80'|' /etc/httpd/conf.d/adminer.conf
 
-echo '==> Installing Python'
-
-dnf -q -y install python2 python3 &>/dev/null
-
 echo '==> Installing rbenv'
 
 dnf -q -y install gcc bzip2 openssl-devel libffi-devel readline-devel zlib-devel gdbm-devel ncurses-devel &>/dev/null

@@ -3,7 +3,7 @@
 Make a Vagrant box with Rocky Linux 8 LAMP stack, plus configure it for development.
 
 - Host: Linux or Mac.
-- Guest: Rocky Linux 8.5, Apache 2.4, MariaDB 10.6, PHP 8.1, Python 2 & 3, Ruby 3, Git 2.
+- Guest: Rocky Linux 8.5, Apache 2.4, MariaDB 10.6, PHP 8.1, Python 3, Ruby 3, Git 2.
 
 - Leave code and version control files physically outside the VM while virtually accessing them inside the VM.
 - Use any GUI tool (IDEs, browsers, database administration applications, Git clients) outside the VM to access code and data inside the VM.
@@ -52,7 +52,7 @@ vagrant ssh
     - Avoid writing a password a zillion times through development.
 - Adminer served at `http://localhost:8000/adminer.php`.
 - Development-specific `php.ini` settings from `.htaccess` for all local websites.
-- Python 2 & 3 installed.
+- Python 3 installed.
 - Ruby's latest version installed with [rbenv](https://github.com/rbenv/rbenv).
 - [Bundler](https://bundler.io) installed.
 
