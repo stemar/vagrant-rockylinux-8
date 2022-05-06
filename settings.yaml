@@ -1,5 +1,7 @@
 ---
 :machine:
+  # https://app.vagrantup.com/bento/boxes/rockylinux-8
+  :box: bento/rockylinux-8 # 64GB HDD
   :hostname: rockylinux-8
   :timezone: Canada/Pacific
   :memory: 3072 # 3GB RAM
@@ -13,7 +15,7 @@
 # HTTP
 - :host: 8000
   :guest: 80
-# MySQL
+# dB
 - :host: 33060
   :guest: 3306
 
