@@ -10,6 +10,10 @@ Make a Vagrant box with Rocky Linux 8 LAMP stack, plus configure it for developm
 
 ---
 
+## Details
+
+[A system for concurrently running Vagrant boxes with flexible configuration](https://stemar.github.io/vagrant).
+
 ## Summary
 
 VM = virtual machine

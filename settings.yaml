@@ -2,10 +2,10 @@
 :machine:
   # https://app.vagrantup.com/bento/boxes/rockylinux-8
   :box: bento/rockylinux-8 # 64GB HDD
-  :hostname: rockylinux-8
-  :timezone: Canada/Pacific
   :memory: 3072 # 3GB RAM
   :cpus: 1
+  :hostname: rockylinux-8
+  :timezone: Canada/Pacific
 
 :forwarded_ports:
 # SSH
