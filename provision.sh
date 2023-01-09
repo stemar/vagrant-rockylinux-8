@@ -48,14 +48,14 @@ echo '==> Installing MariaDB'
 
 dnf -q -y install mariadb-server &>/dev/null
 
-echo '==> Setting PHP 8.1 repository'
+echo '==> Setting PHP 8.2 repository'
 
 {
     rpm --import --quiet https://archive.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-8
     dnf -q -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
     rpm --import --quiet https://rpms.remirepo.net/RPM-GPG-KEY-remi
     dnf -q -y install https://rpms.remirepo.net/enterprise/remi-release-8.rpm
-    dnf -q -y module enable php:remi-8.1
+    dnf -q -y module enable php:remi-8.2
 } &>/dev/null
 
 echo '==> Installing PHP'
@@ -72,17 +72,25 @@ sed -i 's|PHP_ERROR_REPORTING_INT|'$PHP_ERROR_REPORTING_INT'|' /var/www/.htacces
 echo '==> Installing Adminer'
 
 if [ ! -d /usr/share/adminer ]; then
-    mkdir -p /usr/share/adminer
-    curl -LsS https://www.adminer.org/latest-en.php -o /usr/share/adminer/adminer.php
-    sed -i 's|{if($F=="")return|{if(true)|' /usr/share/adminer/adminer.php
+    mkdir -p /usr/share/adminer/plugins
+    curl -LsS https://www.adminer.org/latest-en.php -o /usr/share/adminer/latest-en.php
+    curl -LsS https://raw.githubusercontent.com/vrana/adminer/master/plugins/plugin.php -o /usr/share/adminer/plugins/plugin.php
+    curl -LsS https://raw.githubusercontent.com/vrana/adminer/master/plugins/login-password-less.php -o /usr/share/adminer/plugins/login-password-less.php
+    curl -LsS https://raw.githubusercontent.com/vrana/adminer/master/plugins/dump-json.php -o /usr/share/adminer/plugins/dump-json.php
+    curl -LsS https://raw.githubusercontent.com/vrana/adminer/master/plugins/pretty-json-column.php -o /usr/share/adminer/plugins/pretty-json-column.php
     curl -LsS https://raw.githubusercontent.com/vrana/adminer/master/designs/nicu/adminer.css -o /usr/share/adminer/adminer.css
 fi
+cp /vagrant/config/adminer.php /usr/share/adminer/adminer.php
 cp /vagrant/config/adminer.conf /etc/httpd/conf.d/adminer.conf
 sed -i 's|FORWARDED_PORT_80|'$FORWARDED_PORT_80'|' /etc/httpd/conf.d/adminer.conf
 
+echo '==> Installing Python 3.9'
+
+dnf -q -y install python39 &>/dev/null
+
 echo '==> Installing rbenv'
 
-dnf -q -y install gcc bzip2 openssl-devel libffi-devel readline-devel zlib-devel gdbm-devel ncurses-devel &>/dev/null
+dnf -q -y install libyaml gcc bzip2 openssl-devel libffi-devel readline-devel zlib-devel gdbm-devel ncurses-devel &>/dev/null
 if [ ! -d /home/vagrant/.rbenv ]; then
     git clone -q https://github.com/rbenv/rbenv.git /home/vagrant/.rbenv
 fi
@@ -94,15 +102,12 @@ fi
 if [ ! -d /home/vagrant/.rbenv/plugins/ruby-build ]; then
     git clone -q https://github.com/rbenv/ruby-build.git /home/vagrant/.rbenv/plugins/ruby-build
 fi
-LATEST_RUBY_VERSION=$(rbenv install -l 2> /dev/null | grep -v - | tail -1)
 
-echo '==> Setting Ruby version '$LATEST_RUBY_VERSION
-
-echo '==> Installing Ruby'
+echo '==> Installing Ruby version '$RUBY_VERSION
 
 {
-    rbenv install -s $LATEST_RUBY_VERSION
-    rbenv global $LATEST_RUBY_VERSION
+    rbenv install -s $RUBY_VERSION
+    rbenv global $RUBY_VERSION
 } &>/dev/null
 chown -R vagrant:vagrant /home/vagrant/.rbenv
 

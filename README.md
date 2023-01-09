@@ -3,7 +3,7 @@
 Make a Vagrant box with Rocky Linux 8 LAMP stack, plus configure it for development.
 
 - Host: Linux or Mac.
-- Guest: Rocky Linux 8.5, Apache 2.4, MariaDB 10.6, PHP 8.1, Python 3, Ruby 3, Git 2.
+- Guest: Rocky Linux 8.7, Apache 2.4, MariaDB 10.6, PHP 8.2, Python 3.9, Ruby 3.1.3, Git 2+.
 
 - Leave code and version control files physically outside the VM while virtually accessing them inside the VM.
 - Use any GUI tool (IDEs, browsers, database administration applications, Git clients) outside the VM to access code and data inside the VM.
@@ -24,7 +24,7 @@ In host machine terminal:
 
 ```bash
 mkdir -p ~/VM && cd $_
-git clone --depth 1 https://github.com/stemar/vagrant-rockylinux-8.git rockylinux-8
+git clone --depth=1 https://github.com/stemar/vagrant-rockylinux-8.git rockylinux-8
 cd ~/VM/rockylinux-8
 vagrant up --provision
 vagrant ssh
@@ -39,7 +39,7 @@ vagrant ssh
 
 ### Result
 
-- 64bit Rocky Linux 8.5 virtual machine with virtual 64GB HDD, 3GB RAM and updated LAMP stack from [Bento](https://app.vagrantup.com/bento/boxes/rockylinux-8).
+- 64bit Rocky Linux 8.7 virtual machine with virtual 64GB HDD, 3GB RAM and updated LAMP stack from [Bento](https://app.vagrantup.com/bento/boxes/rockylinux-8).
 - Custom `.bashrc` to modify bash settings inside the virtual machine.
 - Configure LAMP settings from the host machine instead of inside the virtual machine.
 - Provisioning in `bash` because the commands can easily be copied/pasted inside a VM or server for troubleshooting.
@@ -56,7 +56,7 @@ vagrant ssh
     - Avoid writing a password a zillion times through development.
 - Adminer served at `http://localhost:8000/adminer.php`.
 - Development-specific `php.ini` settings from `.htaccess` for all local websites.
-- Python 3 installed.
+- Python 3.9 installed.
 - Ruby's latest version installed with [rbenv](https://github.com/rbenv/rbenv).
 - [Bundler](https://bundler.io) installed.
 
@@ -89,6 +89,7 @@ Edit values in `settings.yaml`.
 - Change `:synced_folder` values to match your host machine pathname.
 - Edit the `:copy_files` values:
 - Edit the `:php_error_reporting` value if necessary.
+- Edit the `:ruby_version` value if necessary.
 
 Edit `config` files if needed.
 

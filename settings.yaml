@@ -17,7 +17,7 @@
   :guest: 80
 - :host: 3000
   :guest: 3000
-# dB
+# MySQL
 - :host: 33060
   :guest: 3306
 
@@ -32,4 +32,6 @@
   :destination: /home/vagrant/.gitconfig
 
 :php_error_reporting: E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT
+
+:ruby_version: 3.1.3
 ...
