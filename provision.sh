@@ -88,34 +88,38 @@ echo '==> Installing Python 3.9'
 
 dnf -q -y install python39 &>/dev/null
 
-echo '==> Installing rbenv'
+if [ $RUBY_VERSION ]; then
 
-dnf -q -y install libyaml gcc bzip2 openssl-devel libffi-devel readline-devel zlib-devel gdbm-devel ncurses-devel &>/dev/null
-if [ ! -d /home/vagrant/.rbenv ]; then
-    git clone -q https://github.com/rbenv/rbenv.git /home/vagrant/.rbenv
+    echo '==> Installing rbenv'
+
+    dnf -q -y install libyaml gcc bzip2 openssl-devel libffi-devel readline-devel zlib-devel gdbm-devel ncurses-devel &>/dev/null
+    if [ ! -d /home/vagrant/.rbenv ]; then
+        git clone -q https://github.com/rbenv/rbenv.git /home/vagrant/.rbenv
+    fi
+    export RBENV_ROOT="/home/vagrant/.rbenv"
+    if ! grep -q "$RBENV_ROOT" <<< "$PATH"; then
+        export PATH="${RBENV_ROOT}/bin:${PATH}"
+        eval "$(rbenv init -)"
+    fi
+    if [ ! -d /home/vagrant/.rbenv/plugins/ruby-build ]; then
+        git clone -q https://github.com/rbenv/ruby-build.git /home/vagrant/.rbenv/plugins/ruby-build
+    fi
+
+    echo '==> Installing Ruby version '$RUBY_VERSION
+
+    {
+        rbenv install -s $RUBY_VERSION
+        rbenv global $RUBY_VERSION
+    } &>/dev/null
+    chown -R vagrant:vagrant /home/vagrant/.rbenv
+
+    echo '==> Installing Bundler'
+
+    cp /vagrant/config/gemrc /home/vagrant/.gemrc
+    chown vagrant:vagrant /home/vagrant/.gemrc
+    gem install -q --silent bundler
+
 fi
-export RBENV_ROOT="/home/vagrant/.rbenv"
-if ! grep -q "$RBENV_ROOT" <<< "$PATH"; then
-    export PATH="${RBENV_ROOT}/bin:${PATH}"
-    eval "$(rbenv init -)"
-fi
-if [ ! -d /home/vagrant/.rbenv/plugins/ruby-build ]; then
-    git clone -q https://github.com/rbenv/ruby-build.git /home/vagrant/.rbenv/plugins/ruby-build
-fi
-
-echo '==> Installing Ruby version '$RUBY_VERSION
-
-{
-    rbenv install -s $RUBY_VERSION
-    rbenv global $RUBY_VERSION
-} &>/dev/null
-chown -R vagrant:vagrant /home/vagrant/.rbenv
-
-echo '==> Installing Bundler'
-
-cp /vagrant/config/gemrc /home/vagrant/.gemrc
-chown vagrant:vagrant /home/vagrant/.gemrc
-gem install -q --silent bundler
 
 echo '==> Testing Apache configuration'
 
@@ -147,6 +151,7 @@ git --version
 httpd -V | head -n1 | cut -d ' ' -f 3-
 mysql -V
 php -v | head -n1
-python2 --version 2>/dev/stdout
 python3 --version
-ruby -v
+if [ $RUBY_VERSION ]; then
+    ruby -v
+fi

@@ -33,5 +33,4 @@ Vagrant.configure("2") do |config|
     "RUBY_VERSION"        => settings[:ruby_version],
     "TIMEZONE"            => settings[:machine][:timezone]
   }
-  # config.vm.provision :shell, path: "#{dir}/config/ruby_provision.sh", privileged: false
 end
