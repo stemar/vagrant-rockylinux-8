@@ -26,7 +26,7 @@ chown -R root:apache /var/log/httpd
 cp /vagrant/config/localhost.conf /etc/httpd/conf.d/localhost.conf
 cp /vagrant/config/virtualhost.conf /etc/httpd/conf.d/virtualhost.conf
 sed -i 's|GUEST_SYNCED_FOLDER|'$GUEST_SYNCED_FOLDER'|' /etc/httpd/conf.d/virtualhost.conf
-sed -i 's|FORWARDED_PORT_80|'$FORWARDED_PORT_80'|' /etc/httpd/conf.d/virtualhost.conf
+sed -i 's|HOST_HTTP_PORT|'$HOST_HTTP_PORT'|' /etc/httpd/conf.d/virtualhost.conf
 
 echo '==> Fixing localhost SSL certificate'
 
@@ -82,7 +82,7 @@ if [ ! -d /usr/share/adminer ]; then
 fi
 cp /vagrant/config/adminer.php /usr/share/adminer/adminer.php
 cp /vagrant/config/adminer.conf /etc/httpd/conf.d/adminer.conf
-sed -i 's|FORWARDED_PORT_80|'$FORWARDED_PORT_80'|' /etc/httpd/conf.d/adminer.conf
+sed -i 's|HOST_HTTP_PORT|'$HOST_HTTP_PORT'|' /etc/httpd/conf.d/adminer.conf
 
 echo '==> Installing Python 3.9'
 
@@ -142,7 +142,8 @@ systemctl restart mariadb
 systemctl enable mariadb
 mysqladmin -u root password ""
 
-echo '==> Versions:'
+echo
+echo '==> Stack versions <=='
 
 cat /etc/redhat-release
 openssl version
