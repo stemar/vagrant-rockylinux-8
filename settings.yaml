@@ -5,8 +5,6 @@
   :memory: 3072 # 3GB RAM
   :cpus: 1
   :hostname: rockylinux-8
-  :timezone: Canada/Pacific
-
   :timezone: America/Los_Angeles
 
 :forwarded_ports:
