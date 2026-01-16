@@ -6,6 +6,7 @@
 
 - Added `CHANGELOG.md`
 - Added `config/adminer-plugins.php`
+- Added `setenforce Permissive` and firewall commands to unblock localhost websites.
 
 ### Changed
 

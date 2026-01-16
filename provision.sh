@@ -121,6 +121,12 @@ if [ $RUBY_VERSION ]; then
 
 fi
 
+echo '==> Adding HTTP service to firewall'
+
+sudo setenforce Permissive
+firewall-cmd --add-service=http --permanent &>/dev/null
+firewall-cmd --reload &>/dev/null
+
 echo '==> Testing Apache configuration'
 
 if [ ! -L /etc/systemd/system/multi-user.target.wants/httpd.service ] ; then
