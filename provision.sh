@@ -73,9 +73,9 @@ cp /vagrant/config/adminer-plugins.php /usr/share/adminer/adminer-plugins.php
 cp /vagrant/config/adminer.conf /etc/httpd/conf.d/adminer.conf
 sed -i 's|HOST_HTTP_PORT|'$HOST_HTTP_PORT'|' /etc/httpd/conf.d/adminer.conf
 
-echo '==> Installing Python 3.12'
+echo '==> Installing Python 3.6'
 
-dnf -q -y install python312 &>/dev/null
+dnf -q -y install python36 &>/dev/null
 
 if [ $RUBY_VERSION ]; then
 

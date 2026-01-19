@@ -8,7 +8,7 @@
 
 ### Changed
 
-- Updated Python to 3.12.
+- Reverted Python to 3.6.
 - Updated Ruby to 3.3.
 - Changed the way to install Ruby:
     - Replaced download and make with `dnf install`.
