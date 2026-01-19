@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.0.4 - 2026-01-18
+
+### Added
+
+- Added Ruby gem `irb`.
+
+### Changed
+
+- Updated Python to 3.12.
+- Updated Ruby to 3.3.
+- Changed the way to install Ruby:
+    - Replaced download and make with `dnf install`.
+
+### Removed
+
+- Deleted `config/gemrc` file.
+
 ## 1.0.3 - 2026-01-16
 
 ### Added

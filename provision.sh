@@ -73,9 +73,9 @@ cp /vagrant/config/adminer-plugins.php /usr/share/adminer/adminer-plugins.php
 cp /vagrant/config/adminer.conf /etc/httpd/conf.d/adminer.conf
 sed -i 's|HOST_HTTP_PORT|'$HOST_HTTP_PORT'|' /etc/httpd/conf.d/adminer.conf
 
-echo '==> Installing Python 3.9'
+echo '==> Installing Python 3.12'
 
-dnf -q -y install python39 &>/dev/null
+dnf -q -y install python312 &>/dev/null
 
 if [ $RUBY_VERSION ]; then
 
@@ -94,19 +94,23 @@ if [ $RUBY_VERSION ]; then
         git clone -q https://github.com/rbenv/ruby-build.git /home/vagrant/.rbenv/plugins/ruby-build
     fi
 
-    echo '==> Installing Ruby version '$RUBY_VERSION
+    echo '==> Installing Ruby '$RUBY_VERSION
 
-    {
-        rbenv install -s $RUBY_VERSION
-        rbenv global $RUBY_VERSION
-    } &>/dev/null
+    dnf module reset ruby -y &>/dev/null
+    dnf module enable ruby:"${RUBY_VERSION}" -y &>/dev/null
+    dnf install ruby ruby-devel -y &>/dev/null
+    mkdir -p "$(rbenv root)/versions/${RUBY_VERSION}-bin/bin"
+    ln -sf "$(which ruby)" "$(rbenv root)/versions/${RUBY_VERSION}-bin/bin/ruby"
+    rbenv rehash
+    rbenv global "${RUBY_VERSION}-bin"
     chown -R vagrant:vagrant /home/vagrant/.rbenv
 
-    echo '==> Installing Bundler'
+    echo '==> Installing Ruby Gems: bundler & irb'
 
-    cp /vagrant/config/gemrc /home/vagrant/.gemrc
-    chown vagrant:vagrant /home/vagrant/.gemrc
-    gem install -q --silent bundler
+    dnf install rubygem-bundler rubygem-irb -y &>/dev/null
+    ln -sf "$(which bundle)" "$(rbenv root)/versions/${RUBY_VERSION}-bin/bin/bundle"
+    ln -sf "$(which irb)" "$(rbenv root)/versions/${RUBY_VERSION}-bin/bin/irb"
+    rbenv rehash
 
 fi
 
