@@ -8,6 +8,7 @@
 
 ### Changed
 
+- Changed Adminer theme.
 - Reverted Python to 3.6.
 - Made Ruby installation by default.
     - Reverted to default Ruby version.
